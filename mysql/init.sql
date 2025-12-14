@@ -20,6 +20,7 @@ create table turns (
 create table moves (
     id int primary key auto_increment,
     turn_id int not null,
+    disc int not null,
     x int not null,
     y int not null,
     foreign key (turn_id) references turns(id)

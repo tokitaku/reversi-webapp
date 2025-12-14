@@ -68,13 +68,6 @@ export class TurnService {
         //   // TODO 決着がついている場合、game_results テーブルから取得する
         undefined
       );
-      // return {
-      //   turnCount,
-      //   board,
-      //   nextDisc: turnRecord.nextDisc,
-      //   // TODO 決着がついている場合、game_results テーブルから取得する
-      //   winnerDisc: null,
-      // };
     } finally {
       await conn.end();
     }

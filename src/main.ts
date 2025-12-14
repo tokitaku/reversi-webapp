@@ -24,6 +24,7 @@ const app = express();
 
 app.use(morgan("dev"));
 app.use(express.static("static", { extensions: ["html"] }));
+app.use(express.json());
 
 app.get("/api/hello", async (req, res) => {
   res.json({
@@ -124,6 +125,16 @@ app.get("/api/games/latest/turns/:turnCount", async (req, res) => {
   }
 });
 
+app.post("/api/games/latest/turns", async (req, res) => {
+  const turnCount = parseInt(req.body.turnCount);
+  const disc = parseInt(req.body.move.disc);
+  const x = parseInt(req.body.move.x);
+  const y = parseInt(req.body.move.y);
+  console.log(
+    `Received move: turnCount=${turnCount}, disc=${disc}, x=${x}, y=${y}`
+  );
+  res.status(201).end();
+});
 app.use(errorHandler);
 
 app.listen(PORT, () => {

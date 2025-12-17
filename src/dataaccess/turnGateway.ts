@@ -31,7 +31,7 @@ export class TurnGateway {
     gameId: number,
     turnCount: number,
     nextDisc: number,
-    endAt: Date | null
+    endAt: Date
   ): Promise<TurnRecord> {
     const turnInsertResult = await conn.execute<myslq.ResultSetHeader>(
       "insert into turns (game_id, turn_count, next_disc, end_at) values (?, ?, ?, ?)",

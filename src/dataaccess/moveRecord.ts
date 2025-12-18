@@ -6,4 +6,24 @@ export class MoveRecord {
     private _x: number,
     private _y: number
   ) {}
+
+  get id(): number {
+    return this._id;
+  }
+
+  get turnId(): number {
+    return this._turnId;
+  }
+
+  get disc(): number {
+    return this._disc;
+  }
+
+  get x(): number {
+    return this._x;
+  }
+
+  get y(): number {
+    return this._y;
+  }
 }

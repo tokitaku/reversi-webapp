@@ -1,4 +1,4 @@
-import { Board } from "./board";
+import { Board, initialBoard } from "./board";
 import { Disc } from "./disc";
 import { Move } from "./move";
 import { Point } from "./point";
@@ -59,4 +59,8 @@ export class Turn {
   get endAt(): Date {
     return this._endAt;
   }
+}
+
+export function firtsTurn(gameId: number, endAt: Date): Turn {
+  return new Turn(gameId, 0, Disc.Black, undefined, initialBoard, endAt);
 }

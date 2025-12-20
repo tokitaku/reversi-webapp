@@ -1,6 +1,6 @@
-import { MoveGateway } from "../dataaccess/moveGateway";
-import { SquareGateway } from "../dataaccess/squareGateway";
-import { TurnGateway } from "../dataaccess/turnGateway";
+import { MoveGateway } from "../../dataaccess/moveGateway";
+import { SquareGateway } from "../../dataaccess/squareGateway";
+import { TurnGateway } from "../../dataaccess/turnGateway";
 import { Board } from "./board";
 import { toDisc } from "./disc";
 import { Move } from "./move";

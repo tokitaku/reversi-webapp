@@ -1,14 +1,8 @@
 import { connectMySQL } from "../dataaccess/connection";
 import { GameGateway } from "../dataaccess/gameGateway";
-import { MoveGateway } from "../dataaccess/moveGateway";
-import { SquareGateway } from "../dataaccess/squareGateway";
-import { TurnGateway } from "../dataaccess/turnGateway";
-import { DARK, LIGHT } from "../application/constants";
-import { Turn } from "../domain/turn";
-import { toDisc } from "../domain/disc";
-import { Board } from "../domain/board";
-import { Point } from "../domain/point";
-import { TurnRepository } from "../domain/turnRepository";
+import { toDisc } from "../domain/turn/disc";
+import { Point } from "../domain/turn/point";
+import { TurnRepository } from "../domain/turn/turnRepository";
 
 const gameGateway = new GameGateway();
 

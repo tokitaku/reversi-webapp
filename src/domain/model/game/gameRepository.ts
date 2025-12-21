@@ -1,6 +1,6 @@
 import myslq from "mysql2/promise";
 import { Game } from "./game";
-import { GameGateway } from "../../infrastructure/gameGateway";
+import { GameGateway } from "../../../infrastructure/gameGateway";
 
 const gameGateway = new GameGateway();
 

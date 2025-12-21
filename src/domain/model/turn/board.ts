@@ -1,3 +1,4 @@
+import { DomainError } from "../../error/domainError";
 import { Disc, isOppositeDisc } from "./disc";
 import { Move } from "./move";
 import { Point } from "./point";
@@ -13,7 +14,10 @@ export class Board {
 
     // からのマス目ではない場合、置くことはできない
     if (this._discs[move.point.y][move.point.x] !== Disc.Empty) {
-      throw new Error("Selected point is not empty");
+      throw new DomainError(
+        "SelectecPointIsNotEmpty",
+        "Selected point is not empty"
+      );
     }
 
     // ひっくり返せる点はリストアップ
@@ -21,7 +25,7 @@ export class Board {
 
     // ひっくり返せる点がない場合は、置くことはできない
     if (flipPoints.length === 0) {
-      throw new Error("No discs can be flipped");
+      throw new DomainError("FlipPointsIsEmpty", "No discs can be flipped");
     }
 
     // 盤面をコピー
@@ -32,7 +36,10 @@ export class Board {
     // 石を置く
     newDiscs[move.point.y][move.point.x] = move.disc;
 
-    // TODO ひっくり返す
+    // ひっくり返す
+    flipPoints.forEach((point) => {
+      newDiscs[point.y][point.x] = move.disc;
+    });
 
     return new Board(newDiscs);
   }
@@ -79,7 +86,7 @@ export class Board {
     // 左
     checkFlipPoints(-1, 0);
     // 左上
-    checkFlipPoints(-1, -1); 
+    checkFlipPoints(-1, -1);
 
     return flipPoints;
   }

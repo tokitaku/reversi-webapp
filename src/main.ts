@@ -5,6 +5,7 @@ import morgan from "morgan";
 import { gameRouter } from "./presentaion/gameRouter";
 import { turnRouter } from "./presentaion/turnRouter";
 import { DomainError } from "./domain/error/domainError";
+import { ApplicationError } from "./application/error/applicationError";
 
 const PORT = 3000;
 
@@ -34,6 +35,18 @@ function errorHandler(
       message: err.message,
     });
     return;
+  }
+
+  if (err instanceof ApplicationError) {
+    switch (err.type) {
+      case "LatestGameNotFound":
+        console.error("Application error occurred", err);
+        res.status(404).json({
+          type: err.type,
+          message: err.message,
+        });
+        return;
+    }
   }
 
   console.error("Unexpected error occurred", err);

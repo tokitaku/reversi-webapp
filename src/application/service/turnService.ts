@@ -1,9 +1,10 @@
-import { connectMySQL } from "../infrastructure/connection";
-import { GameGateway } from "../infrastructure/gameGateway";
-import { GameRepository } from "../domain/model/game/gameRepository";
-import { toDisc } from "../domain/model/turn/disc";
-import { Point } from "../domain/model/turn/point";
-import { TurnRepository } from "../domain/model/turn/turnRepository";
+import { connectMySQL } from "../../infrastructure/connection";
+import { GameGateway } from "../../infrastructure/gameGateway";
+import { GameRepository } from "../../domain/model/game/gameRepository";
+import { toDisc } from "../../domain/model/turn/disc";
+import { Point } from "../../domain/model/turn/point";
+import { TurnRepository } from "../../domain/model/turn/turnRepository";
+import { ApplicationError } from "../error/applicationError";
 
 const gameGateway = new GameGateway();
 
@@ -40,7 +41,10 @@ export class TurnService {
     try {
       const game = await gameRepository.findLatest(conn);
       if (!game) {
-        throw new Error("Latest game not found");
+        throw new ApplicationError(
+          "LatestGameNotFound",
+          "Latest game not found"
+        );
       }
 
       if (!game.id) {
@@ -75,7 +79,10 @@ export class TurnService {
       // 1つ前のターンを取得する
       const game = await gameRepository.findLatest(conn);
       if (!game) {
-        throw new Error("Latest game not found");
+        throw new ApplicationError(
+          "LatestGameNotFound",
+          "Latest game not found"
+        );
       }
 
       const previousTurnCount = turnCount - 1;

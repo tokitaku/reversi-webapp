@@ -9,7 +9,6 @@ import { Point } from "./point";
 import { Turn } from "./turn";
 import myslq from "mysql2/promise";
 
-
 const turnGateway = new TurnGateway();
 const squareGateway = new SquareGateway();
 const moveGateway = new MoveGateway();
@@ -42,7 +41,9 @@ export class TurnRepository {
     });
 
     const moveRecord = await moveGateway.findForTurnId(conn, turnRecord.id);
+
     let move: Move | undefined;
+
     if (moveRecord) {
       move = new Move(
         toDisc(moveRecord.disc),
@@ -50,10 +51,13 @@ export class TurnRepository {
       );
     }
 
+    const nextDisc =
+      turnRecord.nextDisc === null ? undefined : toDisc(turnRecord.nextDisc);
+
     return new Turn(
       gameId,
       turnCount,
-      toDisc(turnRecord.nextDisc),
+      nextDisc,
       move,
       new Board(board),
       turnRecord.endAt

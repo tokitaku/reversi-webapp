@@ -1,22 +1,23 @@
 import { connectMySQL } from "../../infrastructure/connection";
-import { GameGateway } from "../../infrastructure/gameGateway";
 import { GameRepository } from "../../domain/model/game/gameRepository";
-import { Disc, toDisc } from "../../domain/model/turn/disc";
+import { Disc } from "../../domain/model/turn/disc";
 import { Point } from "../../domain/model/turn/point";
 import { TurnRepository } from "../../domain/model/turn/turnRepository";
 import { ApplicationError } from "../error/applicationError";
-
-const gameGateway = new GameGateway();
+import { GameResultRepository } from "../../domain/model/gameResult/gameResultRepository";
+import { Game } from "../../domain/model/game/game";
+import { GameResult } from "../../domain/model/gameResult/gameResult";
 
 const turnRepository = new TurnRepository();
 const gameRepository = new GameRepository();
+const gameResultRepository = new GameResultRepository();
 
 class FindLatestGameTurnByTurnCountOutput {
   constructor(
     private _turnCount: number,
     private _board: number[][],
-    private _nextDisc: number | undefined,
-    private _winnerDisc: number | undefined
+    private _nextDisc: Disc | undefined,
+    private _winnerDisc: Disc | undefined
   ) {}
 
   get turnCount() {
@@ -59,12 +60,16 @@ export class TurnService {
 
       const board = turn.board.discs;
 
+      let gameResult: GameResult | undefined;
+      if (turn.gameEnded()) {
+        gameResult = await gameResultRepository.findForGameId(conn, game.id);
+      }
+
       return new FindLatestGameTurnByTurnCountOutput(
         turnCount,
         board,
         turn.nextDisc,
-        //   // TODO 決着がついている場合、game_results テーブルから取得する
-        undefined
+        gameResult?.winnerDisc
       );
     } finally {
       await conn.end();
@@ -105,9 +110,9 @@ export class TurnService {
 
       // 勝敗が決した場合、対象結果を保存
       if (newTurn.gameEnded()) {
-        const winnerDisc = newTurn.decideWinnerDisc();
-
-        // TODO 対戦結果を保存
+        const winnerDisc = newTurn.winnerDisc();
+        const gameResult = new GameResult(game.id, winnerDisc, newTurn.endAt);
+        await gameResultRepository.save(conn, gameResult);
       }
 
       await conn.commit();

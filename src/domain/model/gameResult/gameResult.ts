@@ -7,13 +7,15 @@ export class GameResult {
     private _endAt: Date
   ) {}
 
-  get winnerDisc(): WinnerDisc {
-    return this._winnerDisc;
-  }
-  get gameId(): number {
+  get gameId() {
     return this._gameId;
   }
-  get endAt(): Date {
+
+  get winnerDisc() {
+    return this._winnerDisc;
+  }
+
+  get endAt() {
     return this._endAt;
   }
 }

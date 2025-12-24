@@ -1,7 +1,7 @@
 import mysql from "mysql2/promise";
 import { GameResult } from "./gameResult";
 import { GameResultGateway } from "../../../infrastructure/gameResultGateway";
-import { toWinnerDisc } from "./winnterDisc";
+import { toWinnerDisc } from "./winnerDisc";
 
 const gameResultGateway = new GameResultGateway();
 

@@ -1,11 +1,9 @@
-import { GameGateway } from "../../infrastructure/gameGateway";
 import { connectMySQL } from "../../infrastructure/connection";
 import { TurnRepository } from "../../domain/model/turn/turnRepository";
-import { firtsTurn } from "../../domain/model/turn/turn";
+import { firstTurn } from "../../domain/model/turn/turn";
 import { GameRepository } from "../../domain/model/game/gameRepository";
 import { Game } from "../../domain/model/game/game";
 
-const gameGateway = new GameGateway();
 const turnRepository = new TurnRepository();
 const gameRepository = new GameRepository();
 
@@ -22,7 +20,7 @@ export class GameService {
       if (!game.id) {
         throw new Error("game.id does not exist");
       }
-      const turn = firtsTurn(game.id, now);
+      const turn = firstTurn(game.id, now);
 
       await turnRepository.save(conn, turn);
 

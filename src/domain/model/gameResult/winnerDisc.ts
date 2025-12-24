@@ -1,9 +1,9 @@
 import { DomainError } from "../../error/domainError";
 
 export const WinnerDisc = {
-  Black: 1,
+  Draw: 0,
+  Dark: 1,
   Light: 2,
-  Draw: 3,
 } as const;
 
 export type WinnerDisc = (typeof WinnerDisc)[keyof typeof WinnerDisc];

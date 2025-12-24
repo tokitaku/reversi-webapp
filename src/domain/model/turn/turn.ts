@@ -1,5 +1,5 @@
 import { DomainError } from "../../error/domainError";
-import { WinnerDisc } from "../gameResult/winnterDisc";
+import { WinnerDisc } from "../gameResult/winnerDisc";
 import { Board, initialBoard } from "./board";
 import { Disc } from "./disc";
 import { Move } from "./move";
@@ -49,7 +49,7 @@ export class Turn {
     const lightCount = this._board.count(Disc.Light);
 
     if (darkCount > lightCount) {
-      return WinnerDisc.Black;
+      return WinnerDisc.Dark;
     } else if (lightCount > darkCount) {
       return WinnerDisc.Light;
     } else {
@@ -99,6 +99,6 @@ export class Turn {
   }
 }
 
-export function firtsTurn(gameId: number, endAt: Date): Turn {
+export function firstTurn(gameId: number, endAt: Date): Turn {
   return new Turn(gameId, 0, Disc.Black, undefined, initialBoard, endAt);
 }

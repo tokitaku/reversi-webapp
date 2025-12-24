@@ -1,4 +1,4 @@
-import { WinnerDisc } from "./winnterDisc";
+import { WinnerDisc } from "./winnerDisc";
 
 export class GameResult {
   constructor(

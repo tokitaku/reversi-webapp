@@ -7,7 +7,7 @@ export class GameResultGateway {
     gameId: number
   ): Promise<GameResult | undefined> {
     const gameSelectResult = await conn.execute<mysql.RowDataPacket[]>(
-      "select id, game_id, winner_disc, recorded_at from game_results where game_id = ?",
+      "select id, game_id, winner_disc, end_at from game_results where game_id = ?",
       [gameId]
     );
     const record = gameSelectResult[0][0];
@@ -19,7 +19,7 @@ export class GameResultGateway {
     return new GameResult(
       record.game_id,
       record.winner_disc,
-      record.recorded_at
+      record.end_at
     );
   }
 
@@ -30,7 +30,7 @@ export class GameResultGateway {
     endAt: Date
   ) {
     const gameResultInsertResult = await conn.execute<mysql.ResultSetHeader>(
-      "insert into game_results (game_id, winner_disc, recorded_at) values (?, ?, ?)",
+      "insert into game_results (game_id, winner_disc, end_at) values (?, ?, ?)",
       [gameId, winnerDisc, endAt]
     );
   }

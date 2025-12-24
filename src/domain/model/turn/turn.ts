@@ -26,16 +26,16 @@ export class Turn {
 
     const move = new Move(disc, point);
 
-    const newBoard = this._board.place(move);
+    const nextBoard = this._board.place(move);
 
-    const nextDisc = this.decideNextDisc(newBoard, disc);
+    const nextDisc = this.decideNextDisc(nextBoard, disc);
 
     return new Turn(
       this._gameId,
       this._turnCount + 1,
       nextDisc,
       move,
-      newBoard,
+      nextBoard,
       new Date()
     );
   }
@@ -45,8 +45,8 @@ export class Turn {
   }
 
   winnerDisc(): WinnerDisc {
-    const darkCount = this._board.count(Disc.Black);
-    const lightCount = this._board.count(Disc.Light);
+    const darkCount = this.board.count(Disc.Black);
+    const lightCount = this.board.count(Disc.Light);
 
     if (darkCount > lightCount) {
       return WinnerDisc.Dark;

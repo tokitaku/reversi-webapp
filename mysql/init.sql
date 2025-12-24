@@ -39,7 +39,7 @@ create table squares (
 create table game_results (
     id int primary key auto_increment,
     game_id int not null,
-    white_disc int not null,
+    winner_disc int not null,
     end_at datetime not null,
     foreign key (game_id) references games(id)
 );

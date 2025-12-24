@@ -113,7 +113,7 @@ export class Board {
       }
     }
 
-    return true;
+    return false;
   }
 
   count(disc: Disc): number {

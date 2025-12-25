@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise";
-import { GameResult } from "../domain/model/gameResult/gameResult";
+import { GameResult } from "../../../domain/model/gameResult/gameResult";
 
 export class GameResultGateway {
   async findForGameId(
@@ -16,11 +16,7 @@ export class GameResultGateway {
       return undefined;
     }
 
-    return new GameResult(
-      record.game_id,
-      record.winner_disc,
-      record.end_at
-    );
+    return new GameResult(record.game_id, record.winner_disc, record.end_at);
   }
 
   async insert(
